@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Qiao Xijie - 个人主页</title>
+    <title>QiaoXijie - 个人主页</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Satisfy&family=Inter:wght@300;400;600&family=Dancing+Script:wght@700&display=swap"
@@ -70,7 +70,7 @@
             grid-template-columns: 320px 1fr 300px;
             grid-template-rows: auto 1fr;
             gap: 20px;
-            padding: 40px 20px;
+            padding: 40px 20px 100px 20px; /* 增加底部内边距 */
             position: relative;
         }
 
@@ -333,6 +333,21 @@
         .item-sub {
             font-size: 0.75rem;
             color: var(--text-mute);
+        }
+
+        /* 项目描述样式 */
+        .project-description {
+            font-size: 0.75rem;
+            color: var(--text-mute);
+            line-height: 1.4;
+            margin-top: 4px;
+            font-style: italic;
+            max-height: 60px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
         }
 
         .todo-item {
@@ -1127,6 +1142,138 @@
                 border-radius: 10px;
             }
         }
+
+
+        /* 页脚样式 */
+        .glass-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            z-index: 50;
+            padding: 12px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-content {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-link {
+            font-size: 0.7rem;
+            color: var(--text-mute);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-light);
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .footer-divider {
+            color: var(--text-mute);
+            opacity: 0.5;
+            font-size: 0.7rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.65rem;
+            color: var(--text-mute);
+            opacity: 0.8;
+            text-align: center;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .glass-footer {
+                padding: 10px 0;
+                background: rgba(18, 18, 18, 0.9);
+                backdrop-filter: blur(30px);
+            }
+
+            .footer-content {
+                padding: 0 15px;
+                gap: 5px;
+            }
+
+            .footer-links {
+                gap: 8px;
+            }
+
+            .footer-link {
+                font-size: 0.65rem;
+                padding: 3px 6px;
+            }
+
+            .footer-copyright {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-footer {
+                padding: 8px 0;
+            }
+
+            .footer-content {
+                padding: 0 10px;
+                gap: 4px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .footer-divider {
+                display: none;
+            }
+
+            .footer-link {
+                font-size: 0.6rem;
+                padding: 2px 4px;
+            }
+
+            .footer-copyright {
+                font-size: 0.55rem;
+            }
+        }
+
+        /* 横屏适配 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .glass-footer {
+                position: relative;
+                margin-top: auto;
+            }
+        }
+
+        /* 当移动端菜单打开时隐藏页脚 */
+        .mobile-nav.active ~ .glass-footer {
+            display: none;
+        }
+
     </style>
 </head>
 
@@ -1310,6 +1457,27 @@
         </div>
     </div>
 
+    <!-- 页脚 -->
+    <footer class="glass-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://beian.mps.gov.cn/#/query/webSearch?code=12011302141968"
+                   rel="noreferrer"
+                   target="_blank"
+                   class="footer-link">
+                    <img src="https://www.qiaoxijie.cn/beian.png" style="width: 12px; height: 12px;" />
+                    津公网安备 12011302141968号
+                </a>
+                <span class="footer-divider">|</span>
+                <a href="https://beian.miit.gov.cn/"
+                   target="_blank"
+                   class="footer-link">
+                    津ICP备 2022000997号-4
+                </a>
+            </div>
+        </div>
+    </footer>
+
     <!-- 弹窗 -->
     <div id="modal">
         <div class="modal-body">
@@ -1331,34 +1499,78 @@
         const siteBorn = new Date('2022-12-25 00:00:00');
         let currentTabId = 'custom'; // 默认打开custom标签页
 
-        // 初始化存储数据
+        // 初始化存储数据 - 修改项目数据，添加描述字段
         let storage = JSON.parse(localStorage.getItem('qxj_v5_data')) || {
             tabs: [
                 { id: 'custom', name: 'qiaoxijie.cn', locked: true, items: [] },  // 艺术字特殊标签页放在首位
                 {
                     id: 'tools', name: '常用导航', items: [
-                        { name: 'Bilibili', path: 'bilibili.com' },
-                        { name: 'GitHub', path: 'github.com' },
-                        { name: 'Google', path: 'google.com' },
-                        { name: 'ChatGPT', path: 'chat.openai.com' }
+                        { name: 'Bilibili', path: 'bilibili.com', description: '视频分享平台' },
+                        { name: 'GitHub', path: 'github.com', description: '代码托管平台' },
+                        { name: 'Google', path: 'google.com', description: '搜索引擎' },
+                        { name: 'ChatGPT', path: 'chat.openai.com', description: 'AI对话助手' }
                     ]
                 },
                 {
                     id: 'dev', name: '开发文档', items: [
-                        { name: 'Vue Docs', path: 'vuejs.org' },
-                        { name: 'Nacos', path: 'nacos.io' },
-                        { name: 'MDN', path: 'developer.mozilla.org' },
-                        { name: 'Stack Overflow', path: 'stackoverflow.com' }
+                        { name: 'Vue Docs', path: 'vuejs.org', description: 'Vue官方文档' },
+                        { name: 'Nacos', path: 'nacos.io', description: '服务发现和配置管理' },
+                        { name: 'MDN', path: 'developer.mozilla.org', description: 'Web开发文档' },
+                        { name: 'Stack Overflow', path: 'stackoverflow.com', description: '技术问答社区' }
                     ]
                 },
                 {
                     id: 'projects', name: '我的项目', locked: true, items: [
-                        { name: 'Nook-FrontEnd', path: 'QiaoXijie/Nook-FrontEnd' },
-                        { name: 'Nook-backEnd', path: 'QiaoXijie/Nook-backEnd' },
-                        { name: 'Code-Soul-back-end', path: 'QiaoXijie/Code-Soul-back-end' },
-                        { name: 'Code-Soul-front-end', path: 'QiaoXijie/Code-Soul-front-end' },
-                        { name: 'meeting-system', path: 'QiaoXijie/meeting-system' },
-                        { name: 'meeting-system-front', path: 'QiaoXijie/meeting-system-front' }
+                        { 
+                            name: 'synapsedesk个人工作站', 
+                            path: 'https://gitee.com/Old_Nine/synapsedesk-front',
+                            description: '基于Vue的前端项目，个人工作站 模仿google'
+                        },
+                        { 
+                            name: 'Nook即时通讯软件前端', 
+                            path: 'https://gitee.com/Old_Nine/nook-front-end',
+                            description: 'Electron+Vue3+Arco Design即时通讯软件 界面参考了QQ微信'
+                        },
+                        { 
+                            name: 'Nook即时通讯软件后端', 
+                            path: 'https://gitee.com/Old_Nine/nook-back-end',
+                            description: 'SpringBoot+Mysql+WebSocket'
+                        },
+                        { 
+                            name: 'CodeSoul博客后端', 
+                            path: 'https://gitee.com/Old_Nine/code-soul-back-end',
+                            description: 'SpringBoot+Mysql'
+                        },
+                        { 
+                            name: 'CodeSoul博客前端', 
+                            path: 'https://gitee.com/Old_Nine/code-soul-front-end',
+                            description: 'Vue3+naiveUI+TipTap+自定义组件'
+                        },
+                        { 
+                            name: '墨海协作前端', 
+                            path: 'https://gitee.com/Old_Nine/mohai-collaboration-front-pc',
+                            description: 'Vue3+TypeScript+WebSocket,协作部分没那么好用 待重构'
+                        },
+                        { 
+                            name: '墨海协作后端', 
+                            path: 'https://gitee.com/Old_Nine/mohai-collaboration-backend',
+                            description: 'SpringBoot+MySQL+WebSocket'
+                        },
+                        { 
+                            name: '畅记安卓端', 
+                            path: 'https://gitee.com/Old_Nine/changji-android',
+                            description: '全局使用了自定义的组件，风格统一，界面设计是参考MasterGO某设计师的'
+                        },
+                        { 
+                            name: '畅记前端', 
+                            path: 'https://gitee.com/Old_Nine/money-tracker-front-end',
+                            description: 'Vue3+Element'
+                        },
+                        { 
+                            name: '畅记后端', 
+                            path: 'https://gitee.com/Old_Nine/money-tracker-back-end',
+                            description: 'SpringBoot+MySQL'
+                        }
                     ]
                 }
             ],
@@ -1402,7 +1614,6 @@
                 // 返回动画
                 capsuleView.style.animation = 'slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
 
-
                 capsuleView.style.display = 'none';
                 capsuleView.style.animation = '';
                 normalView.style.display = 'flex';
@@ -1435,7 +1646,6 @@
                 infoView.style.animation = 'slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
 
                 // 延迟显示主界面，让过渡更自然
-
                 infoView.style.display = 'none';
                 infoView.style.animation = '';
                 normalView.style.display = 'flex';
@@ -1449,7 +1659,6 @@
                 normalTxt.className = 'p-text visible';
                 oopsTxt.className = 'p-text hidden';
 
-
             } else {
                 // 显示个人信息视图
                 capsuleView.style.display = 'none';
@@ -1460,7 +1669,6 @@
                 oopsTxt.className = 'p-text visible';
             }
         }
-
 
         // 移动端导航控制
         function toggleMobileNav() {
@@ -1575,7 +1783,7 @@
             return `https://${path}`;
         }
 
-        // 渲染项目内容
+        // 渲染项目内容 - 修改：针对projects标签页特殊处理
         function renderItems() {
             const container = document.getElementById('item-container');
             const currentTab = storage.tabs.find(t => t.id === currentTabId);
@@ -1611,11 +1819,26 @@
                             <div class="feature-tag">创意设计</div>
                         </div>
                         <div style="margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-                            <button class="btn btn-primary" onclick="window.open('https://github.com/QiaoXijie', '_blank')">查看我的GitHub</button>
-                            <button class="btn btn-secondary" onclick="window.open('mailto:example@mail.com')">联系我</button>
+                            <button class="btn btn-primary" onclick="window.open('https://blog.qiaoxijie.cn/', '_blank')">查看我的博客</button>
+                            <button class="btn btn-secondary" onclick="window.open('mailto:1810820293@mail.com')">联系我</button>
                         </div>
                     </div>
                 `;
+                return;
+            }
+
+            // 我的项目标签页特殊处理
+            if (currentTabId === 'projects') {
+                container.innerHTML = currentTab.items.map((item, idx) => `
+                    <div class="item-row" onclick="window.open('${item.path}', '_blank')">
+                        <div style="flex: 1;">
+                            <div class="item-title">${item.name}</div>
+                            <div class="item-sub">${item.path}</div>
+                            ${item.description ? `<div class="project-description">${item.description}</div>` : ''}
+                        </div>
+                        <!-- 不显示编辑和删除按钮 -->
+                    </div>
+                `).join('');
                 return;
             }
 
@@ -1625,6 +1848,7 @@
                     <div style="flex: 1;">
                         <div class="item-title">${item.name}</div>
                         <div class="item-sub">${item.path}</div>
+                        ${item.description ? `<div class="project-description">${item.description}</div>` : ''}
                     </div>
                     <div style="display:flex; gap:10px; padding-left: 10px;" onclick="event.stopPropagation()">
                         <i class="ri-edit-line" style="cursor:pointer; color:var(--text-mute)" onclick="editItem(${idx})" title="编辑"></i>
@@ -1636,9 +1860,9 @@
 
         let editingIdx = -1;
         function openModal() {
-            // 如果是自定义标签页，不允许添加项目
-            if (currentTabId === 'custom') {
-                showToast('自定义标签页不允许添加项目');
+            // 如果是自定义标签页或项目标签页，不允许添加项目
+            if (currentTabId === 'custom' || currentTabId === 'projects') {
+                showToast('该标签页不允许添加或编辑项目');
                 return;
             }
 
@@ -1651,6 +1875,12 @@
         }
 
         function editItem(idx) {
+            // 如果是项目标签页，不允许编辑
+            if (currentTabId === 'projects') {
+                showToast('我的项目不允许编辑');
+                return;
+            }
+
             const cur = storage.tabs.find(t => t.id === currentTabId);
             if (!cur) return;
             const item = cur.items[idx];
@@ -1674,6 +1904,12 @@
         }
 
         function deleteItem(idx) {
+            // 如果是项目标签页，不允许删除
+            if (currentTabId === 'projects') {
+                showToast('我的项目不允许删除');
+                return;
+            }
+            
             if (confirm('确定移除该项？')) {
                 const cur = storage.tabs.find(t => t.id === currentTabId);
                 if (cur) cur.items.splice(idx, 1);
@@ -1751,21 +1987,21 @@
             }
         }
 
-            function setRandomWallpaper() {
-        const wallpaperAPIs = [
-            // Picsum 随机图片
-            'https://picsum.photos/1920/1080?random=1',
-            'https://picsum.photos/1920/1080?random=2'
-        ];
-        
-        // 随机选择一个API
-        const randomIndex = Math.floor(Math.random() * wallpaperAPIs.length);
-        const randomWallpaperURL = wallpaperAPIs[randomIndex] + '&t=' + Date.now();
-        
-        // 应用到背景
-        const wallpaperElement = document.querySelector('.wallpaper');
-        wallpaperElement.style.backgroundImage = `url('${randomWallpaperURL}')`;
-    }
+        function setRandomWallpaper() {
+            const wallpaperAPIs = [
+                // Picsum 随机图片
+                'https://picsum.photos/1920/1080?random=1',
+                'https://picsum.photos/1920/1080?random=2'
+            ];
+            
+            // 随机选择一个API
+            const randomIndex = Math.floor(Math.random() * wallpaperAPIs.length);
+            const randomWallpaperURL = wallpaperAPIs[randomIndex] + '&t=' + Date.now();
+            
+            // 应用到背景
+            const wallpaperElement = document.querySelector('.wallpaper');
+            wallpaperElement.style.backgroundImage = `url('${randomWallpaperURL}')`;
+        }
 
         // 更新时间
         function updateTime() {
@@ -1854,8 +2090,8 @@
 
             // 渲染技能标签
             document.getElementById('skill-box').innerHTML = storage.skills.map(s => `
-        <span class="skill-tag">${s}</span>
-    `).join('');
+                <span class="skill-tag">${s}</span>
+            `).join('');
 
             // 为技能标签添加点击事件
             document.querySelectorAll('.skill-tag').forEach(tag => {
